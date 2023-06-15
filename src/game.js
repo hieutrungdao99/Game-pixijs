@@ -60,7 +60,6 @@ export class Game {
             const coin = new Coin();
             this.app.stage.addChild(coin.sprite);
             this.coins.push(coin);
-
         }, 500);
 
         this.boms = [];
@@ -91,7 +90,7 @@ export class Game {
                 collectcoins.volume = 1;
                 collectcoins.loop = false;
                 collectcoins.play();
-                // if (this.lostCoins >= 10) {
+                // if (this.lostCoins >= 1) {
                 //     setInterval(() => {
                 //         const bom = new Bom();
                 //         this.app.stage.addChild(bom.sprite);
@@ -188,7 +187,11 @@ export class Game {
         this.coinText2.text = "";
         window.addEventListener('keydown', this.onKeyDown);
         window.addEventListener('keyup', this.onKeyUp);
-
+        // setInterval(() => {
+        //     const bom = new Bom();
+        //     this.app.stage.addChild(bom.sprite);
+        //     this.boms.push(bom);
+        // }, 500);
         Ticker.shared.start();
         this.resetButton.visible = false;
     }

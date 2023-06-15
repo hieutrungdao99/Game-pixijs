@@ -51,20 +51,15 @@ export default class Clampy {
         // limit clampy position inside the screen
         if (x < clampyWidth / 2) {
             this.animatedClampy.x = clampyWidth / 2;
-            console.log("Chim bay vao canh trai man hinh");
-        } else if (x > screenWidth - clampyWidth / 2) {
-            this.animatedClampy.x = screenWidth - clampyWidth / 2;
-            console.log("Chim bay vao canh phai man hinh");
+        } else if (x > window.innerWidth - clampyWidth / 2) {
+            this.animatedClampy.x = window.innerWidth - clampyWidth / 2;
         } else {
             this.animatedClampy.x = x;
         }
-
         if (y < clampyHeight / 2) {
             this.animatedClampy.y = clampyHeight / 2;
-            console.log("Chim bay len phia tren man hinh");
-        } else if (y > screenHeight - clampyHeight / 2) {
-            this.animatedClampy.y = screenHeight - clampyHeight / 2;
-            console.log("Chim bay xuong phia duoi man hinh");
+        } else if (y > window.innerHeight - clampyHeight / 2) {
+            this.animatedClampy.y = window.innerHeight - clampyHeight / 2;
         } else {
             this.animatedClampy.y = y;
         }
