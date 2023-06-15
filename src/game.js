@@ -1,5 +1,6 @@
-import { Application, Ticker, Bounds, Container, Sprite, Sound, Graphics, Text, TextStyle, BitmapText, BitmapFont, BlurFilter, AnimatedSprite, Texture } from "pixi.js";
+import { Application, Ticker, Bounds, Container, Sprite, Graphics, Text, TextStyle, BitmapText, BitmapFont, BlurFilter, AnimatedSprite, Texture } from "pixi.js";
 import Coin from './coin';
+import { Sound } from "@pixi/sound";
 import Bom from './bom';
 import Clampy from './clampy';
 import Background from './background'
@@ -20,16 +21,22 @@ export class Game {
         this.background.addTo(this.app.stage);
         this.coinText = new Text("Coins: 0", { fontFamily: "Arial", fontSize: 24, fill: "fcad03" });
         this.coinText.position.set(10, 10);
-        this.coinText2 = new Text("", { fontFamily: "Arial", fontSize: 40, fill: "black" });
+        this.coinText2 = new Text("", { fontFamily: "Arial", fontSize: 40, fill: "#800000" });
         this.coinText2.anchor.set(0.5);
-        this.coinText2.position.set(this.app.screen.width / 2, this.app.screen.height / 2);
+        this.coinText2.position.set(this.app.screen.width / 2, this.app.screen.height / 2 - 100);
         this.app.stage.addChild(this.coinText);
         this.app.stage.addChild(this.coinText2);
         this.lostCoins = 0;
-        this.resetButton = new Text("Chơi lại", { fontFamily: "Arial", fontSize: 40, fill: "black" });
+        this.resetButton = new Text("Chơi lại", { fontFamily: "Arial", fontSize: 40, fill: "#800000" });
         this.resetButton.anchor.set(0.5);
-        this.resetButton.position.set(this.app.screen.width / 2, this.app.screen.height / 2 + 50);
+        this.resetButton.position.set(this.app.screen.width / 2, this.app.screen.height / 2 - 50);
         this.app.stage.addChild(this.resetButton);
+
+        const bgSound = Sound.from('assets/music/bgmusic2.mp3');
+        bgSound.volume = 1;
+        bgSound.loop = true;
+        bgSound.play();
+
         //tao chim
         this.clampy = new Clampy(this.app.screen.width / 2, this.app.screen.height / 2);
         const animatedClampy = this.clampy.animatedClampy;
@@ -80,13 +87,17 @@ export class Game {
                 i--;
                 this.lostCoins++;
                 this.coinText.text = `Coins: ${this.lostCoins}`;
-                if (this.lostCoins >= 50) {
-                    // setInterval(() => {
-                    //     const bom = new Bom();
-                    //     this.app.stage.addChild(bom.sprite);
-                    //     this.boms.push(bom);
-                    // }, 700);
-                }
+                const collectcoins = Sound.from('assets/music/coins.mp3');
+                collectcoins.volume = 1;
+                collectcoins.loop = false;
+                collectcoins.play();
+                // if (this.lostCoins >= 10) {
+                //     setInterval(() => {
+                //         const bom = new Bom();
+                //         this.app.stage.addChild(bom.sprite);
+                //         this.boms.push(bom);
+                //     }, 700);
+                // }
             }
         }
     }
@@ -100,6 +111,10 @@ export class Game {
                 i--;
                 this.clampy.animatedClampy.parent.removeChild(this.clampy.animatedClampy);
                 this.coinText2.text = `Bạn đã thua :(`;
+                const collisionsbom = Sound.from('assets/music/bom2.mp3');
+                collisionsbom.volume = 1;
+                collisionsbom.loop = false;
+                collisionsbom.play();
 
                 for (let i = 0; i < this.coins.length; i++) {
                     this.coins[i].sprite.parent.removeChild(this.coins[i].sprite);
@@ -120,9 +135,9 @@ export class Game {
         }
     }
     static update(deltaTime) {
-        Game.clampy.update(deltaTime);
-        Game.checkCollisions();
-        Game.checkCollisions2();
+        this.clampy.update(deltaTime);
+        this.checkCollisions();
+        this.checkCollisions2();
     }
 
 
@@ -173,6 +188,7 @@ export class Game {
         this.coinText2.text = "";
         window.addEventListener('keydown', this.onKeyDown);
         window.addEventListener('keyup', this.onKeyUp);
+
         Ticker.shared.start();
         this.resetButton.visible = false;
     }
@@ -180,9 +196,5 @@ export class Game {
 }
 
 window.onload = function () {
-
     Game.init();
-
-
-
 }

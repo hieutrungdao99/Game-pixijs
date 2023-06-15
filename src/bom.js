@@ -4,8 +4,6 @@ export default class Coin {
 
     sprite;
     speed = 2;
-
-
     constructor() {
         const frames = [
             "assets/images/bom3.png"
@@ -15,7 +13,6 @@ export default class Coin {
         this.sprite.x = Math.random() * innerWidth;
         this.sprite.y = 0;
         this.sprite.play();
-        // this.sprite.animationSpeed = this.spinSpeed;
         Ticker.shared.add(this.update, this)
     }
     update(deltaTime) {

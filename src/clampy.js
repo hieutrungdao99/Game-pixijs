@@ -51,16 +51,20 @@ export default class Clampy {
         // limit clampy position inside the screen
         if (x < clampyWidth / 2) {
             this.animatedClampy.x = clampyWidth / 2;
+            console.log("Chim bay vao canh trai man hinh");
         } else if (x > screenWidth - clampyWidth / 2) {
             this.animatedClampy.x = screenWidth - clampyWidth / 2;
+            console.log("Chim bay vao canh phai man hinh");
         } else {
             this.animatedClampy.x = x;
         }
 
         if (y < clampyHeight / 2) {
             this.animatedClampy.y = clampyHeight / 2;
+            console.log("Chim bay len phia tren man hinh");
         } else if (y > screenHeight - clampyHeight / 2) {
             this.animatedClampy.y = screenHeight - clampyHeight / 2;
+            console.log("Chim bay xuong phia duoi man hinh");
         } else {
             this.animatedClampy.y = y;
         }
@@ -71,7 +75,19 @@ export default class Clampy {
         } else if (this.moveX < 0) {
             this.animatedClampy.scale.x = -1; // face left
         }
+
+        // Check if clampy x coordinate is within bounds
+        if (this.animatedClampy.x > screenWidth || this.animatedClampy.x < 0) {
+            console.log("Chim bay ra ngoai man hinh - x: ", this.animatedClampy.x);
+        }
+
+        // Check if clampy y coordinate is within bounds
+        if (this.animatedClampy.y > screenHeight || this.animatedClampy.y < 0) {
+            console.log("Chim bay ra ngoai man hinh - y: ", this.animatedClampy.y);
+        }
     }
+
+
 
     stopMoving() {
         this.moveX = 0;
